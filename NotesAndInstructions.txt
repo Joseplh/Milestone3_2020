@@ -1,0 +1,8 @@
+The TL_System folder, provided by the teacher, is required for the Bascinet program, the location of this folder is 
+
+Quick set-up: The project folder has a setting for the TL System.
+- Put the provided TL_System folder into the c:\ drive
+- Right-click the project folder, select properties
+- In Categories select TL_System and set the TL system to "c:\TL_System"
+
+This ensures that when you clone the github folder that the system should work without altering the setting everytime it is shared.
