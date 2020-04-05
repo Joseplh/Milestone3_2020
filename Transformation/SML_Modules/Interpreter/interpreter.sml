@@ -23,6 +23,7 @@ fun execute [ programTree ] =
     let
         (* Here is where the TLP representation of a tree is converted to a tree datatype similar to what we discussed in class *)
         val tree0 = Strategic_Values.getTerm programTree
+       
        (* here is where the call to the typeCheck function is made. Two outcomes are possible: (1) return an m, or (2) raise an exception *)       
         val _     = TypeChecker.typeCheck(tree0,Model.initialModel); 
         val _     = print("\n\n -------------type check passed\n\n");
@@ -35,7 +36,7 @@ fun execute [ programTree ] =
                 
         print("\n\n\n");
         print(" ======================================= \n");
-        Model.showProgState(result);
+        (* Model.printModel(result); *)
         print("\n ======================================= \n");
         print("\n\n\n") 
     end

@@ -1,4 +1,0 @@
-INTEGER x;
-INTEGER y;
-x = 1 + 2;
-y = x + 2;
