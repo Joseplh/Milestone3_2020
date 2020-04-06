@@ -4,23 +4,24 @@ prog
 
 
 (* ======================================================================================================= *)
-<Program>               ::= <StatementList>       .                                                            
-<StatementList>         ::= <Statement> ";" <StatementList>
-                        |<Epsilon> .
-<Epsilon>               ::= .
-<Statement>             ::= <Declaration> ";"
-                        | <Assignment> ";"
-                        | <PrintSt> ";"
-                        | <Block>
-                        | <ForLoop>
-                        | <ConditionStatement>
-                        | <WhileLoop>
-                        | <Increment> ";" .
-<Declaration>           ::= "INT" Variable
-                        | "BOOL" Variable .
-<Assignment>            ::= Variable "=" <Expr>
-                        | <Increment> .
-<PrintSt>               ::= "print ("<Expr>")". 
+<Program>           ::= <StatementList>       .                                                            
+<StatementList>     ::= <Statement> ";" <StatementList>
+                      |<Epsilon> .
+<Epsilon>           ::= .
+<Statement>         ::= <Declaration> ";"
+                      | <Assignment> ";"
+                      | <PrintSt> ";"
+                      | <Block>
+                      | <ForLoop>
+                      | <ConditionStatement>
+                      | <WhileLoop>
+                      | <Increment> ";" .
+<Declaration>       ::= "INTEGER" Variable
+                      | "BOOLEAN" Variable .
+<Assignment>        ::= Variable "=" <Expression>                                       
+                      | "INTEGER" Variable "=" <Expression>
+                      | "BOOLEAN" Variable "=" <Expression>                                 .
+<PrintSt>               ::= "print" "("<Expr>")". 
 <Block>                 ::= "{"<StatementList>"}".
 <CondStatement>         ::= "if" "("<Expr>")" "then" <Block>
                         |"if" "("<Expr>")" "then" <Block> "else" <Block>.
@@ -50,14 +51,15 @@ prog
 <UnaryExpr>             ::= "!" <UnaryExpr>
                         | "-" <ExpExpr>
                         | <ExpExpr>.
-<ExpExpr>               ::= <BaseExpr> "^" <ExpExpr>
-                        | <BaseExpr>.
-<BaseExpr>              ::= Variable
-                        |<Increment>
-                        |"("<Expr>")"
-                        |"|"<Expr> "|"
-                        |<Integer>
-                        |bool.
+<ExprExp>           ::= <ExprBase> "^" <ExprExp> 
+                      | <ExprBase>                                                          .
+<ExprBase>          ::= Integer 
+                      | "true" 
+                      | "false" 
+                      | Variable 
+                      | "(" <Expression> ")" 
+                      | "|"<Expression>"|" 
+                      | <Increment> 
 
 
 
