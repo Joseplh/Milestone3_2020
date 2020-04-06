@@ -48,8 +48,8 @@ ws              = [\  \t \n];
 "INTEGER"       => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
 "BOOLEAN"       => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
 
-"true"          => ( SHELL( yytext, yytext, getNextTokenPos( yytext)) );
-"false"         => ( SHELL( yytext, yytext, getNextTokenPos( yytext)) );
+"true"          => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
+"false"         => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
 
 "+"             => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
 "-"             => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
@@ -58,7 +58,7 @@ ws              = [\  \t \n];
 "MOD"           => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
 "|"             => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
 "^"             => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
-"~"             => ( SHELL(yytext, yytext, getNextTokenPos(yytext)) );
+"~"             => ( SHELL( yytext, yytext, getNextTokenPos(yytext  )));
 
 "and"           => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
 "or"            => ( SHELL( yytext, yytext, getNextTokenPos( yytext )));
