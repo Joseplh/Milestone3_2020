@@ -1,5 +1,64 @@
 USE_LR_PARSER
 
 prog
-(* ======================================================================================================= *)
-<prog>               ::= <stmt_list> "."                                                                .
+
+
+(* ======================================================================================================= *)
+<Program>               ::= <StatementList>       .                                                            
+<StatementList>         ::= <Statement> ";" <StatementList>
+                        |<Epsilon> .
+<Epsilon>               ::= .
+<Statement>             ::= <Declaration> ";"
+                        | <Assignment> ";"
+                        | <PrintSt> ";"
+                        | <Block>
+                        | <ForLoop>
+                        | <ConditionStatement>
+                        | <WhileLoop>
+                        | <Increment> ";" .
+<Declaration>           ::= "INT" Variable
+                        | "BOOL" Variable .
+<Assignment>            ::= Variable "=" <Expr>
+                        | <Increment> .
+<PrintSt>               ::= "print ("<Expr>")". 
+<Block>                 ::= "{"<StatementList>"}".
+<CondStatement>         ::= "if" "("<Expr>")" "then" <Block>
+                        |"if" "("<Expr>")" "then" <Block> "else" <Block>.
+<WhileLoop>             ::= "while" "("<Expr>")" <Block>.
+<ForLoop>               ::= "for" "(" <Assignment> ";" <Expr> ";" <Increment> ";" ")" <Block>.
+<Increment>             ::= "++" Variable
+                        | Variable "++"
+                        | "--" Variable
+                        | Variable "--".
+<Expr>                  ::= <Expr> "||" <AndExpr>
+                        | <AndExpr> .
+<AndExpr>               ::= <AndExpr> "&&" <EqualityExpr> 
+                        |<EqualityExpr>.
+<EqualityExpr>          ::= <EqualityExpr> "!=" <ComparisonExpr>
+                        |<EqualityExpr> "==" <ComparisonExpr>
+                        |<ComparisonExpr>.
+<ComaprisonExpr>        ::= <ComparisonExpr> "<" <AddSubExpr>
+                        |<ComparisonExpr> ">" <AddSubExpr>
+                        |<ComparisonExpr>.
+<AddSubExpr>            ::= <AddSubExpr> "+" <MultiDivModExpr>
+                        |<AddSubExpr> "-" <MultiDivModExpr>
+                        |<MultiDivModExpr>.
+<MultiDivModExpr>       ::=<MultiDivModExpr> "*" <UnaryExpr>
+                        |<MultiDivModExpr> "DIV" <UnaryExpr>
+                        |<MultiDivModExpr> "MOD" <UnaryExpr>
+                        |<UnaryExpr>.
+<UnaryExpr>             ::= "!" <UnaryExpr>
+                        | "-" <ExpExpr>
+                        | <ExpExpr>.
+<ExpExpr>               ::= <BaseExpr> "^" <ExpExpr>
+                        | <BaseExpr>.
+<BaseExpr>              ::= Variable
+                        |<Increment>
+                        |"("<Expr>")"
+                        |"|"<Expr> "|"
+                        |<Integer>
+                        |bool.
+
+
+
+                       
