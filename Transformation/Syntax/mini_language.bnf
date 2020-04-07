@@ -2,55 +2,56 @@ USE_LR_PARSER
 
 prog
 
-
 (* ======================================================================================================= *)
-<Program>           ::= <StatementList>       .                                                            
-<StatementList>     ::= <Statement> ";" <StatementList>
-                      |<Epsilon> .
-<Epsilon>           ::= .
-<Statement>         ::= <Declaration> ";"
-                      | <Assignment> ";"
-                      | <PrintSt> ";"
-                      | <Block>
-                      | <ForLoop>
-                      | <ConditionStatement>
-                      | <WhileLoop>
-                      | <Increment> ";" .
-<Declaration>       ::= "INTEGER" Variable
-                      | "BOOLEAN" Variable .
+
+<prog>              ::= <StatementList>                                                     .
+<StatementList>     ::= <Statement> ";" <StatementList> 
+                      | <Epsilon>                                                           .
+<Epsilon>           ::=                                                                     .
+<Statement>         ::= <Declaration>
+                      | <Assignment>
+                      | <Conditional>
+                      | <Increment>
+                      | <Print>
+                      | <Block> 
+                      | <ForLoop> 
+                      | <WhileLoop>                                                         .
+<Declaration>       ::= "INTEGER" Variable 
+                      | "BOOLEAN" Variable                                                  .
 <Assignment>        ::= Variable "=" <Expression>                                       
                       | "INTEGER" Variable "=" <Expression>
                       | "BOOLEAN" Variable "=" <Expression>                                 .
-<PrintSt>               ::= "print" "("<Expr>")". 
-<Block>                 ::= "{"<StatementList>"}".
-<CondStatement>         ::= "if" "("<Expr>")" "then" <Block>
-                        |"if" "("<Expr>")" "then" <Block> "else" <Block>.
-<WhileLoop>             ::= "while" "("<Expr>")" <Block>.
-<ForLoop>               ::= "for" "(" <Assignment> ";" <Expr> ";" <Increment> ";" ")" <Block>.
-<Increment>             ::= "++" Variable
-                        | Variable "++"
-                        | "--" Variable
-                        | Variable "--".
-<Expr>                  ::= <Expr> "||" <AndExpr>
-                        | <AndExpr> .
-<AndExpr>               ::= <AndExpr> "&&" <EqualityExpr> 
-                        |<EqualityExpr>.
-<EqualityExpr>          ::= <EqualityExpr> "!=" <ComparisonExpr>
-                        |<EqualityExpr> "==" <ComparisonExpr>
-                        |<ComparisonExpr>.
-<ComaprisonExpr>        ::= <ComparisonExpr> "<" <AddSubExpr>
-                        |<ComparisonExpr> ">" <AddSubExpr>
-                        |<ComparisonExpr>.
-<AddSubExpr>            ::= <AddSubExpr> "+" <MultiDivModExpr>
-                        |<AddSubExpr> "-" <MultiDivModExpr>
-                        |<MultiDivModExpr>.
-<MultiDivModExpr>       ::=<MultiDivModExpr> "*" <UnaryExpr>
-                        |<MultiDivModExpr> "DIV" <UnaryExpr>
-                        |<MultiDivModExpr> "MOD" <UnaryExpr>
-                        |<UnaryExpr>.
-<UnaryExpr>             ::= "!" <UnaryExpr>
-                        | "-" <ExpExpr>
-                        | <ExpExpr>.
+<Conditional>       ::= "if" "(" <Expression> ")" <Block> 
+                      | "if" "(" <Expression> ")" <Block> "else" <Block>                    .
+<Increment>         ::= "++" Variable 
+                      | "--" Variable 
+                      | Variable "++" 
+                      | Variable "--"                                                       .
+<WhileLoop>         ::= "while" "(" <Expression> ")" <Block>                                .
+<ForLoop>           ::= "for" "(" <Assignment> ";" <Expression> ";" <Increment> ")" <Block>  .
+<Print>             ::= "print" "(" <Expression> ")"                                        .
+<Block>             ::= "{" <StatementList> "}"                                             .
+<Expression>        ::= <ExprOr>                                                            .
+<ExprOr>            ::= <ExprOr> "or" <ExprAnd>
+                      | <ExprAnd>                                                           .
+<ExprAnd>           ::= <ExprAnd> "and" <ExprBoolComp>
+                      | <ExprBoolComp>                                                      .
+<ExprBoolComp>      ::= <ExprBoolComp>"!="<ExprIntComp> 
+                      | <ExprBoolComp>"=="<ExprIntComp>
+                      | <ExprIntComp>                                                       .
+<ExprIntComp>       ::= <ExprIntComp> "<" <ExprAddSub>
+                      | <ExprIntComp> ">" <ExprAddSub>
+                      | <ExprAddSub>                                                        .
+<ExprAddSub>        ::= <ExprAddSub> "+" <ExprMulDivMod>
+                      | <ExprAddSub> "-" <ExprMulDivMod>
+                      | <ExprMulDivMod>                                                     .
+<ExprMulDivMod>     ::= <ExprMulDivMod> "*" <ExprNeg>
+                      | <ExprMulDivMod> "/" <ExprNeg>
+                      | <ExprMulDivMod> "MOD" <ExprNeg>
+                      | <ExprNeg>                                                           .
+<ExprNeg>           ::= "~" <ExprNeg>
+                      | "not" <ExprNeg>
+                      | <ExprExp>                                                           .
 <ExprExp>           ::= <ExprBase> "^" <ExprExp> 
                       | <ExprBase>                                                          .
 <ExprBase>          ::= Integer 
@@ -59,8 +60,4 @@ prog
                       | Variable 
                       | "(" <Expression> ")" 
                       | "|"<Expression>"|" 
-                      | <Increment> 
-
-
-
-                       
+                      | <Increment>                                                         .
