@@ -1,63 +1,66 @@
 USE_LR_PARSER
 
-prog
+Program
 
 (* ======================================================================================================= *)
 
-<prog>              ::= <StatementList>                                                     .
-<StatementList>     ::= <Statement> ";" <StatementList> 
-                      | <Epsilon>                                                           .
-<Epsilon>           ::=                                                                     .
-<Statement>         ::= <Declaration>
-                      | <Assignment>
-                      | <Conditional>
-                      | <Increment>
-                      | <Print>
+<Program>           ::= <StatementList>                                                 .
+<StatementList>     ::= <Statement> <StatementList> 
+                      | <epsilon>                                                       .
+<Statement>         ::= <Declaration> ";" 
+                      | <Assignment> ";" 
+                      | <PrintSt> ";" 
                       | <Block> 
                       | <ForLoop> 
-                      | <WhileLoop>                                                         .
-<Declaration>       ::= "INTEGER" Variable 
-                      | "BOOLEAN" Variable                                                  .
-<Assignment>        ::= Variable "=" <Expression>                                       
-                      | "INTEGER" Variable "=" <Expression>
-                      | "BOOLEAN" Variable "=" <Expression>                                 .
-<Conditional>       ::= "if" "(" <Expression> ")" <Block> 
-                      | "if" "(" <Expression> ")" <Block> "else" <Block>                    .
-<Increment>         ::= "++" Variable 
-                      | "--" Variable 
-                      | Variable "++" 
-                      | Variable "--"                                                       .
-<WhileLoop>         ::= "while" "(" <Expression> ")" <Block>                                .
-<ForLoop>           ::= "for" "(" <Assignment> ";" <Expression> ";" <Increment> ")" <Block>  .
-<Print>             ::= "print" "(" <Expression> ")"                                        .
-<Block>             ::= "{" <StatementList> "}"                                             .
-<Expression>        ::= <ExprOr>                                                            .
-<ExprOr>            ::= <ExprOr> "or" <ExprAnd>
-                      | <ExprAnd>                                                           .
-<ExprAnd>           ::= <ExprAnd> "and" <ExprBoolComp>
-                      | <ExprBoolComp>                                                      .
-<ExprBoolComp>      ::= <ExprBoolComp>"!="<ExprIntComp> 
-                      | <ExprBoolComp>"=="<ExprIntComp>
-                      | <ExprIntComp>                                                       .
-<ExprIntComp>       ::= <ExprIntComp> "<" <ExprAddSub>
-                      | <ExprIntComp> ">" <ExprAddSub>
-                      | <ExprAddSub>                                                        .
-<ExprAddSub>        ::= <ExprAddSub> "+" <ExprMulDivMod>
-                      | <ExprAddSub> "-" <ExprMulDivMod>
-                      | <ExprMulDivMod>                                                     .
-<ExprMulDivMod>     ::= <ExprMulDivMod> "*" <ExprNeg>
-                      | <ExprMulDivMod> "/" <ExprNeg>
-                      | <ExprMulDivMod> "MOD" <ExprNeg>
-                      | <ExprNeg>                                                           .
-<ExprNeg>           ::= "~" <ExprNeg>
-                      | "not" <ExprNeg>
-                      | <ExprExp>                                                           .
-<ExprExp>           ::= <ExprBase> "^" <ExprExp> 
-                      | <ExprBase>                                                          .
-<ExprBase>          ::= Integer 
-                      | "true" 
-                      | "false" 
-                      | Variable 
-                      | "(" <Expression> ")" 
-                      | "|"<Expression>"|" 
-                      | <Increment>                                                         .
+                      | <CondStatement> 
+                      | <WhileLoop>  
+                      | <Increment> ";"                                                 .
+<Declaration>       ::= "INT" <id> 
+                      | "BOOL" <id>                                                     
+                      | <AssignDec>                                                     .
+<AssignDec>         ::= "INT" <id> "=" <AddSubExpr> 
+                      | "BOOL" <id> "=" <Expr>                                          .
+<Assignment>        ::= <id> "=" <Expr> 
+                      | <Increment>                                                     .
+<PrintSt>           ::= "print" "(" <Expr> ")"                                          .
+<Block>             ::= "{" <StatementList> "}"                                         .
+<CondStatement>     ::= "if" "(" <Expr> ")" <Block> 
+                      | "if" "(" <Expr> ")" <Block> "else" <Block>               .
+<WhileLoop>         ::= "while" "(" <Expr> ")" <Block>                                  .
+<ForLoop>           ::= "for" "(" <AssignDec> ";" <Expr> ";" <Increment> ")" <Block>   .
+<Increment>         ::= "++" <id> 
+                      | <id> "++" 
+                      | "--" <id> 
+                      | <id> "--"                                                       .
+<Expr>              ::= <Expr> "||" <AndExpr> 
+                      | <AndExpr>                                                       .
+<AndExpr>           ::= <AndExpr> "&&" <EqualityExpr> 
+                      | <EqualityExpr>                                                  .
+<EqualityExpr>      ::= <EqualityExpr> "!=" <ComparisonExpr> 
+                      | <EqualityExpr> "==" <ComparisonExpr> 
+                      | <ComparisonExpr>                                                .
+<ComparisonExpr>    ::= <ComparisonExpr> "<" <AddSubExpr> 
+                      | <ComparisonExpr> ">" <AddSubExpr> 
+                      | <AddSubExpr>                                                    .
+<AddSubExpr>        ::= <AddSubExpr> "+" <MultDivModExpr> 
+                      | <AddSubExpr> "-" <MultDivModExpr> 
+                      | <MultDivModExpr>                                                .
+<MultDivModExpr>    ::= <MultDivModExpr> "*" <UnaryExpr> 
+                      | <MultDivModExpr> "DIV" <UnaryExpr> 
+                      | <MultDivModExpr> "MOD" <UnaryExpr> 
+                      | <UnaryExpr>                                                     .
+<UnaryExpr>         ::= "!" <UnaryExpr> 
+                      | "-" <ExpExpr> 
+                      | <ExpExpr>                                                       .
+<ExpExpr>           ::= <BaseExpr> "^" <ExpExpr> 
+                      | <BaseExpr>                                                      .
+<BaseExpr>          ::= <Increment> 
+                      | "(" <Expr> ")" 
+                      | "|" <Expr> "|" 
+                      | <id> 
+                      | <integer> 
+                      | <bool>                                       .
+<id>                ::= ident                                                              .
+<integer>           ::= integerNum                                                         .
+<bool>              ::= boolVal                                                            .
+<epsilon>           ::= .

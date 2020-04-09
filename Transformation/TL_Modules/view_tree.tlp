@@ -6,10 +6,10 @@ module BasicView(precision = 0, verbosity=0)
 
 // ===========================================================================
 strategy main:     
-    <prog>_in -> <prog>_in
+    <Program>_in -> <Program>_in
     if { 
-                      sml.prettyprint(<prog>_in)
-            andalso sml.toDot(<prog>_in)
+                      sml.prettyprint(<Program>_in)
+            andalso sml.toDot(<Program>_in)
     }
         
 
